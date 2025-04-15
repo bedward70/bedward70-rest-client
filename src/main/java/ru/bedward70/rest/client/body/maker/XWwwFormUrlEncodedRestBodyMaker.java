@@ -26,6 +26,7 @@ package ru.bedward70.rest.client.body.maker;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -69,9 +70,15 @@ public class XWwwFormUrlEncodedRestBodyMaker implements RestBodyMaker<Map<String
             .stream()
             .map(
                 (e) ->
-                    URLEncoder.encode(e.getKey(), StandardCharsets.UTF_8)
-                    + "="
-                    + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8)
+                {
+                    try {
+                        return URLEncoder.encode(e.getKey(), StandardCharsets.UTF_8.toString())
+                        + "="
+                        + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8.toString());
+                    } catch (UnsupportedEncodingException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             )
             .collect(Collectors.joining("&"));
     }

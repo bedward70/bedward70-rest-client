@@ -60,7 +60,11 @@ public class OutputStreamRestResponseAcceptor implements RestResponseAcceptor<Bo
     @Override
     public Boolean readValue(InputStream inputStream, Class<Boolean> responseClazz) throws IOException {
         try (OutputStream os = outputStreamSupplier.get()) {
-            inputStream.transferTo(os);
+            byte[] buf = new byte[8192];
+            int length;
+            while ((length = inputStream.read(buf)) != -1) {
+                os.write(buf, 0, length);
+            }
         }
         return true;
     }

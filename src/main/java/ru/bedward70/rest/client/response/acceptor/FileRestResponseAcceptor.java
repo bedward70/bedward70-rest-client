@@ -61,7 +61,11 @@ public class FileRestResponseAcceptor implements RestResponseAcceptor<File> {
     @Override
     public File readValue(InputStream inputStream, Class<File> responseClazz) throws IOException {
         try (OutputStream os = new FileOutputStream(file)) {
-            inputStream.transferTo(os);
+            byte[] buf = new byte[8192];
+            int length;
+            while ((length = inputStream.read(buf)) != -1) {
+                os.write(buf, 0, length);
+            }
         }
         return file;
     }

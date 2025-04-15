@@ -182,7 +182,7 @@ public class BaseRestClient implements RestClient {
                 throw new ErrorCodeRestClientException(
                     con.getResponseCode(),
                     con.getResponseMessage(),
-                    nonNull(inputErrorStream) ? inputErrorStream.readAllBytes() : null
+                    nonNull(inputErrorStream) ? null : null
                 );
             }
         }

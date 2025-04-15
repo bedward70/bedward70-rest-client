@@ -41,6 +41,6 @@ public class StringRestResponseAcceptor implements RestResponseAcceptor<String> 
 
     @Override
     public String readValue(InputStream inputStream, Class<String> responseClazz) throws IOException {
-        return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        return "";//new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
     }
 }
