@@ -24,6 +24,8 @@
  */
 package ru.bedward70.rest.client.body.maker;
 
+import ru.bedward70.rest.util.RuntimeExceptionUtil;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLConnection;
@@ -69,9 +71,9 @@ public class XWwwFormUrlEncodedRestBodyMaker implements RestBodyMaker<Map<String
             .stream()
             .map(
                 (e) ->
-                    URLEncoder.encode(e.getKey(), StandardCharsets.UTF_8)
+                    RuntimeExceptionUtil.wrap(() -> URLEncoder.encode(e.getKey(), StandardCharsets.UTF_8.toString()))
                     + "="
-                    + URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8)
+                    + RuntimeExceptionUtil.wrap(() -> URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8.toString()))
             )
             .collect(Collectors.joining("&"));
     }

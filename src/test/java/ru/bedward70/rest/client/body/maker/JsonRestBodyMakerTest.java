@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLConnection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -118,9 +119,12 @@ public class JsonRestBodyMakerTest {
     }
 
     private static Stream<Arguments> write() {
+        Map<String, String> map = new HashMap<>();
+        map.put("id", "1");
+        map.put("value",  "2");
         return Stream.of(
             Arguments.of(Collections.emptyMap()),
-            Arguments.of(Map.of("id", "1", "value",  "2"))
+            Arguments.of(map)
         );
     }
 }

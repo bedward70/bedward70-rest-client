@@ -28,15 +28,19 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static ru.bedward70.rest.client.response.acceptor.RestResponseAcceptor.ACCEPT_HEADER_KEY;
 
 public class StringRestResponseAcceptorTest {
@@ -63,16 +67,13 @@ public class StringRestResponseAcceptorTest {
     @Test
     void readValue() throws IOException {
         // when
-        InputStream inputStream = Mockito.mock(InputStream.class);
         String expected = "test";
-
-        doReturn(expected.getBytes(StandardCharsets.UTF_8)).when(inputStream).readAllBytes();
+        InputStream inputStream = new ByteArrayInputStream(expected.getBytes(StandardCharsets.UTF_8));
 
         // do
         String result = acceptor.readValue(inputStream, String.class);
 
         // then
-        verify(inputStream, times(1)).readAllBytes();
         assertEquals(expected, result);
     }
 }

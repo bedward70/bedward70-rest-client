@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -63,7 +64,8 @@ public class BaseRestClientTest {
         RestResponseAcceptor<String> responseAcceptor = Mockito.mock(RestResponseAcceptor.class);
         String headerName = "name";
         String headerValue = "getting of statistic";
-        final Map<String, String> headers = Map.of(headerName, headerValue);
+        Map<String, String> headers = new HashMap<>();
+        headers.put(headerName, headerValue);
         int responseCode = 201;
         final Integer[] successfulResponseCodes = new Integer[] {responseCode};
 

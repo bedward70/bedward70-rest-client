@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,7 +66,8 @@ public class JsonRestResponseAcceptorTest {
     @Test
     void readValue() throws IOException {
         // when
-        Map expected = Map.of("value", 26);
+        Map<String, Integer> expected = new HashMap<>();
+        expected.put("value", 26);
         InputStream inputStream = new ByteArrayInputStream(objectMapper.writeValueAsString(expected).getBytes(StandardCharsets.UTF_8));
 
         // do

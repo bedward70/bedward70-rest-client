@@ -28,7 +28,9 @@ import ru.bedward70.rest.client.body.maker.RestBodyMaker;
 import ru.bedward70.rest.client.exception.ErrorCodeRestClientException;
 import ru.bedward70.rest.client.exception.ErrorRestClientException;
 import ru.bedward70.rest.client.response.acceptor.RestResponseAcceptor;
+import ru.bedward70.rest.util.InputStreamUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -182,7 +184,7 @@ public class BaseRestClient implements RestClient {
                 throw new ErrorCodeRestClientException(
                     con.getResponseCode(),
                     con.getResponseMessage(),
-                    nonNull(inputErrorStream) ? inputErrorStream.readAllBytes() : null
+                    nonNull(inputErrorStream) ? new InputStreamUtil(inputErrorStream).toBytes() : null
                 );
             }
         }

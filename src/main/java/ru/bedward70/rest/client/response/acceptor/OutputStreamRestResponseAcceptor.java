@@ -24,6 +24,8 @@
  */
 package ru.bedward70.rest.client.response.acceptor;
 
+import ru.bedward70.rest.util.InputStreamUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -60,7 +62,7 @@ public class OutputStreamRestResponseAcceptor implements RestResponseAcceptor<Bo
     @Override
     public Boolean readValue(InputStream inputStream, Class<Boolean> responseClazz) throws IOException {
         try (OutputStream os = outputStreamSupplier.get()) {
-            inputStream.transferTo(os);
+            new InputStreamUtil(inputStream).transferTo(os);
         }
         return true;
     }

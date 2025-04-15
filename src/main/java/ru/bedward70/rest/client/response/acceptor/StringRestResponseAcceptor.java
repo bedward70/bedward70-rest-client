@@ -24,6 +24,8 @@
  */
 package ru.bedward70.rest.client.response.acceptor;
 
+import ru.bedward70.rest.util.InputStreamUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
@@ -41,6 +43,6 @@ public class StringRestResponseAcceptor implements RestResponseAcceptor<String> 
 
     @Override
     public String readValue(InputStream inputStream, Class<String> responseClazz) throws IOException {
-        return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        return new String(new InputStreamUtil(inputStream).toBytes(), StandardCharsets.UTF_8);
     }
 }

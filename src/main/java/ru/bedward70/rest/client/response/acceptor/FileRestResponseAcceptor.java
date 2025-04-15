@@ -24,6 +24,8 @@
  */
 package ru.bedward70.rest.client.response.acceptor;
 
+import ru.bedward70.rest.util.InputStreamUtil;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -61,7 +63,7 @@ public class FileRestResponseAcceptor implements RestResponseAcceptor<File> {
     @Override
     public File readValue(InputStream inputStream, Class<File> responseClazz) throws IOException {
         try (OutputStream os = new FileOutputStream(file)) {
-            inputStream.transferTo(os);
+            new InputStreamUtil(inputStream).transferTo(os);
         }
         return file;
     }

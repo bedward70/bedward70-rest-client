@@ -24,6 +24,8 @@
  */
 package ru.bedward70.rest.client.response.acceptor;
 
+import ru.bedward70.rest.util.InputStreamUtil;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,7 +59,7 @@ public class BytesRestResponseAcceptor implements RestResponseAcceptor<byte[]> {
     @Override
     public byte[] readValue(InputStream inputStream, Class<byte[]> responseClazz) throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        inputStream.transferTo(os);
+        new InputStreamUtil(inputStream).transferTo(os);
         return os.toByteArray();
     }
 }
